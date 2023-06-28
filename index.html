@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfect Pizza</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <style>
+    .message {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      background-color: #eaeaea;
+      border: 1px solid #ccc;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="justwhitecolor" x-data="{
+    cartItems: [],
+    showCheckout: false,
+    showMessage: false,
+    message: '',
+    smallPrice: 49.00,
+    mediumPrice: 89.00,
+    largePrice: 129.00,
+    smallTotal: 0,
+    mediumTotal: 0,
+    largeTotal: 0,
+    totalCost: 0,
+    addToCart(item, price) {
+      let existingItem = this.cartItems.find((cartItem) => cartItem.name === item);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        this.cartItems.push({ name: item, quantity: 1, price: price });
+      }
+      this.updateTotals();
+      this.showCheckout = true;
+    },
+    removeFromCart(index) {
+      let item = this.cartItems[index];
+      item.quantity--;
+      if (item.quantity === 0) {
+        this.cartItems.splice(index, 1);
+      }
+      this.updateTotals();
+      if (this.cartItems.length === 0) {
+        this.showCheckout = false;
+      }
+    },
+    incrementQuantity(item) {
+      item.quantity++;
+      this.updateTotals();
+    },
+    decrementQuantity(item) {
+      if (item.quantity > 1) {
+        item.quantity--;
+        this.updateTotals();
+      }
+    },
+    updateTotals() {
+      let smallTotal = 0;
+      let mediumTotal = 0;
+      let largeTotal = 0;
+      let totalCost = 0;
+
+      this.cartItems.forEach((item) => {
+        if (item.name === 'Small Pizza') {
+          smallTotal += item.quantity;
+        } else if (item.name === 'Medium Pizza') {
+          mediumTotal += item.quantity;
+        } else if (item.name === 'Large Pizza') {
+          largeTotal += item.quantity;
+        }
+        totalCost += item.quantity * item.price;
+      });
+
+      this.smallTotal = smallTotal;
+      this.mediumTotal = mediumTotal;
+      this.largeTotal = largeTotal;
+      this.totalCost = totalCost;
+    },
+    checkout() {
+      if (this.cartItems.length === 0) {
+        return;
+      }
+      const totalAmount = this.totalCost;
+      const paymentAmount = parseFloat(prompt('Enter the payment amount:'));
+      if (paymentAmount >= totalAmount) {
+        this.cartItems = [];
+        this.updateTotals();
+        this.showMessage = true;
+        this.message = 'Enjoy your pizzas!';
+        setTimeout(() => {
+          this.showMessage = false;
+        }, 3000);
+      } else {
+        this.showMessage = true;
+        this.message = 'Sorry, that is not enough money!';
+        setTimeout(() => {
+          this.showMessage = false;
+        }, 3000);
+      }
+    }
+  }">
+    <div class="pizzatextcolor">
+      <h1>Perfect Pizza</h1>
+    </div>
+    <hr>
+
+    <div class="cart">
+      <h2>Shopping Cart</h2>
+      <ul>
+        <template x-for="(item, index) in cartItems" :key="index">
+          <li>
+            <span x-text="item.name"></span>
+            <button type="button" @click="incrementQuantity(item)">+</button>
+            <span x-text="item.quantity"></span>
+            <button type="button" @click="decrementQuantity(item)">-</button>
+          </li>
+        </template>
+      </ul>
+      <div>
+        <!-- Small Pizza: <span x-text="smallTotal"></span><br>
+        Medium Pizza: <span x-text="mediumTotal"></span><br>
+        Large Pizza: <span x-text="largeTotal"></span><br> -->
+        Total Cost: R<span x-text="totalCost.toFixed(2)"></span>
+      </div>
+      <button type="button" x-show="showCheckout" @click="checkout">Check Out</button>
+    </div>
+
+    <div class="pizzas">
+      <div class="pizza small_pizza">
+        <h2>Small Pizza</h2>
+        <img src="pizza-png-from-pngfre-16.png" width="100">
+        <h3>R49.00</h3>
+        <div>
+          Small in size, big in flavor - the small pizza!
+        </div>
+        <br>
+
+        <div>
+          <button type="button" name="add" @click="addToCart('Small Pizza', smallPrice)" class="">Buy</button>
+        </div>
+      </div>
+
+      <div class="pizza medium_pizza">
+        <h2>Medium Pizza</h2>
+        <img src="pizza-png-from-pngfre-16.png" width="125">
+        <h3>R89.00</h3>
+        <div>
+          Perfectly sized, perfectly delicious - the medium pizza!
+        </div>
+
+        <br>
+
+        <div>
+          <button type="button" name="add" @click="addToCart('Medium Pizza', mediumPrice)" class="">Buy</button>
+        </div>
+      </div>
+
+      <div class="pizza large_pizza">
+        <h2>Large Pizza</h2>
+        <img src="pizza-png-from-pngfre-16.png" width="150">
+        <h3>R129.00</h3>
+        <div>
+          Share the love, share the flavor - the large pizza!
+        </div>
+        <br>
+
+        <div>
+          <button type="button" name="add" @click="addToCart('Large Pizza', largePrice)" class="">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pizza contact_us">
+      <h2>Contact details</h2>
+      Call: 011 340 1231 | Email: info@perfectpizza.co.za
+      <br>
+      <div class="website">www.perfectpizza.co.za</div>
+    </div>
+
+    <div class="message" x-show="showMessage" x-text="message"></div>
+  </div>
+</body>
+
+</html>

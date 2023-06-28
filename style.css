@@ -1,0 +1,75 @@
+body {
+    background-image: url(https://pizzatomorrow.com/wp-content/uploads/2021/11/HeroBackground_PT.jpg);
+    background-size: cover;
+    /* background-color: #FFCA3A; */
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-emphasis-color: #fff;
+
+}
+
+
+.pizzatextcolor {
+    color: #fff;
+    /* background-color: #fff; */
+    font-family: cursive;
+    font-size: x-large;
+    border-color: black;
+}
+
+.cart {
+    border: 1px solid gainsboro;
+    color: #fff;
+    background-color: black;
+    text-align: center;
+    margin: 1em;
+    border-radius: 1em;
+}
+
+.pizza {
+    border: 1px solid gainsboro;
+    padding: 1em;
+    margin: 1em;
+    /*margin-left: 0em;*/
+    margin-bottom: 0.5em;
+    border-radius: 1em;
+    color: #fff;
+}
+
+.medium_pizza {
+    background-color: black;
+    /*flex: 1;*/
+}
+
+.large_pizza {
+    background-color: black;
+    /*flex: 2;*/
+}
+
+.small_pizza{
+    background-color: black;
+    /*flex: 1;*/
+}
+
+.contact_us {
+    background-color: #8AC926;
+    text-align: center;
+    padding: 1rem;
+    /* margin: 1em; */
+}
+
+.website {
+    /* padding: 1em; */
+    text-align: center;
+
+}
+
+.justwhitecolor {
+    color: #fff;
+}
+
+@media (min-width: 960px) {
+    .pizzas {
+        display: flex;
+    }
+
+}
