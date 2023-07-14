@@ -98,12 +98,16 @@
         this.updateTotals();
         this.showMessage = true;
         this.message = 'Enjoy your pizzas!';
+        alert(this.message);
+        <!-- alert(this.message = 'Enjoy your pizzas!'); -->
         setTimeout(() => {
           this.showMessage = false;
         }, 3000);
       } else {
         this.showMessage = true;
         this.message = 'Sorry, that is not enough money!';
+        alert(this.message);
+        <!-- this.message = 'Sorry, that is not enough money!'; -->
         setTimeout(() => {
           this.showMessage = false;
         }, 3000);
@@ -127,6 +131,9 @@
           </li>
         </template>
       </ul>
+
+      <div x-text="this.message">
+      </div>
       <div>
         <!-- Small Pizza: <span x-text="smallTotal"></span><br>
         Medium Pizza: <span x-text="mediumTotal"></span><br>
